@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: 
+    repoURL: https://github.com/Himanshu-Toshniwal/Production-Grade-K8s-CICD-Pipeline.git
     targetRevision: main
     path: k8s
 
