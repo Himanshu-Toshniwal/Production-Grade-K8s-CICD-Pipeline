@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/Himanshu-Toshniwal/Production-Grade-K8s-CICD-Pipeline.git
     targetRevision: main
-    path: k8s
+    path: Main Branch Code/k8s
 
   destination:
     server: https://kubernetes.default.svc
