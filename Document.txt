@@ -81,12 +81,12 @@ sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
 
 # Creation of Cluster
-eksctl create cluster --name kastro-cluster --region us-east-1 --node-type t2.medium  --zones us-east-1a,us-east-1b
+eksctl create cluster --name himanshu-cluster --region ap-south-1 --node-type t2.medium  --zones ap-south-1a,ap-south-1b
 
 
 
 #To delete the cluster
-eksctl delete cluster --name kastro-cluster --region us-east-1
+eksctl delete cluster --name himanshu-cluster --region ap-south-1
 
 
 sudo usermod -aG docker jenkins
@@ -96,7 +96,7 @@ aws sts get-caller-identity
 
 Configure kubeconfig
 aws eks update-kubeconfig \
-  --region us-east-1 \
+  --region ap-south-1 \
   --name eks-cluster
 
 sudo mkdir -p /home/jenkins/.kube
