@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: movie-app-service
+  name: e-commerce-app-service
 spec:
   type: LoadBalancer
   selector:
-    app: movie-app
+    app: e-commerce-app
   ports:
     - port: 80
       targetPort: 5000
