@@ -21,12 +21,12 @@ spec:
         env:
         - name: FLASK_ENV
           value: "production"
+        - name: DATABASE_URL
+          value: "sqlite:///ecommerce.db"
         - name: SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: flask-secrets
-              key: secret-key
-              optional: true
+          value: "prod-secret-key-change-this-12345"
+        - name: PYTHONUNBUFFERED
+          value: "1"
         resources:
           requests:
             memory: "128Mi"
