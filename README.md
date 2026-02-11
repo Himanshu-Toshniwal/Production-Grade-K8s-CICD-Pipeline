@@ -6,6 +6,9 @@
 ![GitOps](https://img.shields.io/badge/GitOps-ArgoCD-orange?logo=argo)
 ![Flask](https://img.shields.io/badge/Flask-Python-green?logo=flask)
 ![PostgreSQL](https://img.shields.io/badge/Database-SQLite-blue?logo=sqlite)
+![Helm](https://img.shields.io/badge/Helm-Charts-0F1689?logo=helm)
+![Prometheus](https://img.shields.io/badge/Monitoring-Prometheus-E6522C?logo=prometheus)
+![Grafana](https://img.shields.io/badge/Dashboards-Grafana-F46800?logo=grafana)
 
 ---
 
