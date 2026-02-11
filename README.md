@@ -324,6 +324,196 @@ readinessProbe:
 
 ---
 
+## 📊 Monitoring & Observability
+
+This project includes production-grade monitoring using **Prometheus** and **Grafana** for complete observability.
+
+### 🔍 Monitoring Stack
+
+| Tool | Purpose |
+|------|---------|
+| 📈 **Prometheus** | Metrics collection and storage |
+| 📊 **Grafana** | Visualization and dashboards |
+| 🔔 **Alertmanager** | Alert management and notifications |
+| 📡 **Node Exporter** | Hardware and OS metrics |
+| 🎯 **Kube State Metrics** | Kubernetes cluster metrics |
+
+---
+
+### 🚀 Setup Monitoring (Prometheus + Grafana)
+
+#### Step 1: Add Helm Repository
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+```
+
+#### Step 2: Create Monitoring Namespace
+```bash
+kubectl create namespace monitoring
+```
+
+#### Step 3: Install kube-prometheus-stack
+```bash
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring
+```
+⏳ Takes 1-2 minutes to deploy all components.
+
+#### Step 4: Verify Installation
+```bash
+kubectl get pods -n monitoring
+```
+
+You should see:
+- ✅ Prometheus server
+- ✅ Alertmanager
+- ✅ Grafana
+- ✅ Node exporter
+- ✅ Kube-state-metrics
+
+---
+
+### 🌐 Access Grafana Dashboard
+
+#### 1. Expose Grafana via LoadBalancer
+```bash
+kubectl patch svc monitoring-grafana \
+  -n monitoring \
+  -p '{"spec":{"type":"LoadBalancer"}}'
+```
+
+#### 2. Get Grafana URL
+```bash
+kubectl get svc monitoring-grafana -n monitoring
+```
+Open: `http://<EXTERNAL-IP>`
+
+#### 3. Get Grafana Login Credentials
+```bash
+# Get password
+kubectl get secret monitoring-grafana \
+  -n monitoring \
+  -o jsonpath="{.data.admin-password}" | base64 -d
+
+# Login credentials
+Username: admin
+Password: (output from above command)
+```
+
+---
+
+### 📈 Pre-configured Dashboards
+
+The kube-prometheus-stack includes **production-ready dashboards** automatically:
+
+| Dashboard | Metrics |
+|-----------|---------|
+| **Kubernetes / Cluster** | Overall cluster health, resource usage |
+| **Kubernetes / Nodes** | Node CPU, memory, disk, network |
+| **Kubernetes / Pods** | Pod status, restarts, resource consumption |
+| **Kubernetes / Deployments** | Deployment status, replica counts |
+| **Node Exporter Full** | Detailed hardware metrics |
+
+👉 **No manual import needed** - All dashboards are auto-configured!
+
+---
+
+### 🎯 Key Metrics to Monitor
+
+#### Application Metrics:
+- ✅ Pod CPU and memory usage
+- ✅ Request latency and throughput
+- ✅ Error rates (4xx, 5xx)
+- ✅ Pod restart counts
+- ✅ Container health status
+
+#### Infrastructure Metrics:
+- ✅ Node resource utilization
+- ✅ Disk I/O and network traffic
+- ✅ Kubernetes API server health
+- ✅ etcd performance
+- ✅ Cluster capacity and limits
+
+#### Business Metrics (Custom):
+- ✅ Total orders placed
+- ✅ Active users
+- ✅ Payment success rate
+- ✅ Cart abandonment rate
+
+---
+
+### 🔔 Alerting (Optional)
+
+Prometheus Alertmanager is included for notifications:
+
+```bash
+# Access Alertmanager
+kubectl port-forward svc/monitoring-kube-prometheus-alertmanager \
+  -n monitoring 9093:9093
+```
+
+Configure alerts for:
+- High CPU/memory usage
+- Pod crashes or restarts
+- Node failures
+- Disk space warnings
+- Application errors
+
+---
+
+### 📊 Monitoring Architecture
+
+```
+Application Pods
+      ↓
+  Prometheus (scrapes metrics)
+      ↓
+  Grafana (visualizes)
+      ↓
+  Alertmanager (sends alerts)
+      ↓
+  Email/Slack/PagerDuty
+```
+
+---
+
+### 🛠️ Useful Monitoring Commands
+
+```bash
+# Check Prometheus status
+kubectl get pods -n monitoring | grep prometheus
+
+# Check Grafana status
+kubectl get svc monitoring-grafana -n monitoring
+
+# View Prometheus targets
+kubectl port-forward svc/monitoring-kube-prometheus-prometheus \
+  -n monitoring 9090:9090
+# Open: http://localhost:9090/targets
+
+# Restart monitoring stack
+helm upgrade monitoring prometheus-community/kube-prometheus-stack \
+  -n monitoring
+
+# Uninstall monitoring (if needed)
+helm uninstall monitoring -n monitoring
+kubectl delete namespace monitoring
+```
+
+---
+
+### 💡 Monitoring Best Practices
+
+✅ Set up alerts for critical metrics
+✅ Monitor resource limits vs actual usage
+✅ Track application-specific metrics
+✅ Regular dashboard reviews
+✅ Set retention policies for metrics
+✅ Backup Grafana dashboards
+✅ Use labels for better filtering
+
+---
+
 ## 📝 Notes
 
 - **Database**: Uses SQLite by default (no setup required). Can easily switch to PostgreSQL for production.
