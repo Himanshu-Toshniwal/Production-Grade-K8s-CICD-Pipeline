@@ -74,6 +74,7 @@ This repository demonstrates how **real-world DevOps teams** build, automate, an
 ✔ Jenkins Multibranch Pipeline with feature branch support
 ✔ Automated Docker image builds and DockerHub push
 ✔ Kubernetes deployment with resource limits and health checks
+✔ Horizontal Pod Autoscaler (HPA) for automatic scaling (2-10 pods)
 ✔ Helm-based package management for Argo CD and monitoring stack
 ✔ GitOps workflow with Argo CD automated sync
 ✔ Prometheus & Grafana monitoring with pre-configured dashboards
@@ -342,6 +343,100 @@ readinessProbe:
 
 ---
 
+## ⚡ Auto-Scaling (HPA)
+
+This project includes **Horizontal Pod Autoscaler** for automatic scaling based on resource usage.
+
+### 📊 HPA Configuration
+
+```yaml
+Min Replicas: 2
+Max Replicas: 10
+CPU Threshold: 70%
+Memory Threshold: 80%
+Scale Up: Fast (30s stabilization)
+Scale Down: Gradual (5min stabilization)
+```
+
+### 🚀 Deploy HPA
+
+```bash
+# Apply HPA configuration
+kubectl apply -f k8s/hpa.yaml
+
+# Verify HPA is running
+kubectl get hpa
+```
+
+### 📈 Monitor Auto-Scaling
+
+```bash
+# Check HPA status
+kubectl get hpa e-commerce-app-hpa
+
+# Watch HPA in real-time
+kubectl get hpa -w
+
+# Detailed HPA information
+kubectl describe hpa e-commerce-app-hpa
+
+# Watch pods scale up/down
+kubectl get pods -l app=e-commerce-app -w
+```
+
+### 🧪 Test Auto-Scaling
+
+Generate load to trigger scaling:
+
+```bash
+# Method 1: Using kubectl run
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh
+# Inside the pod:
+while true; do wget -q -O- http://e-commerce-app-service:5000; done
+
+# Method 2: Using Apache Bench (from local machine)
+# Get LoadBalancer IP first
+kubectl get svc
+
+# Generate load
+ab -n 10000 -c 100 http://<LOADBALANCER-IP>/
+```
+
+### 📊 Scaling Behavior
+
+**Scale Up (Fast):**
+- Triggers when CPU > 70% or Memory > 80%
+- Can double pods every 30 seconds
+- Maximum 2 pods added per 30 seconds
+
+**Scale Down (Gradual):**
+- Waits 5 minutes before scaling down
+- Reduces by 50% maximum per minute
+- Prevents flapping during traffic fluctuations
+
+### 💰 Cost Benefits
+
+```
+Low Traffic (Night):    2 pods  → Save 60% cost
+Normal Traffic (Day):   5 pods  → Optimal
+High Traffic (Sales):   10 pods → No downtime
+```
+
+### 🔍 Troubleshooting
+
+```bash
+# Check metrics server (required for HPA)
+kubectl get deployment metrics-server -n kube-system
+
+# View current resource usage
+kubectl top pods
+
+# View HPA events
+kubectl describe hpa e-commerce-app-hpa | grep Events -A 10
+```
+
+---
+
 ## 📊 Monitoring & Observability
 
 This project includes production-grade monitoring using **Prometheus** and **Grafana** for complete observability.
@@ -565,6 +660,7 @@ This project demonstrates:
 - Admin panel development
 - Docker containerization with multi-stage builds
 - Kubernetes deployment with best practices
+- Horizontal Pod Autoscaler (HPA) for auto-scaling
 - Helm package management
 - CI/CD pipeline with Jenkins Multibranch
 - GitOps with Argo CD
