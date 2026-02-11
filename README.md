@@ -12,6 +12,10 @@
 
 ---
 
+![Project Architecture](project.png)
+
+---
+
 ## 📌 Project Overview
 
 A **full-featured e-commerce web application** built with Flask and deployed using a **production-grade CI/CD pipeline**:
