@@ -5,7 +5,7 @@
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-AWS%20EKS-blue?logo=kubernetes)
 ![GitOps](https://img.shields.io/badge/GitOps-ArgoCD-orange?logo=argo)
 ![Flask](https://img.shields.io/badge/Flask-Python-green?logo=flask)
-![PostgreSQL](https://img.shields.io/badge/Database-SQLite-blue?logo=sqlite)
+![Database](https://img.shields.io/badge/Database-SQLite-blue?logo=sqlite)
 ![Helm](https://img.shields.io/badge/Helm-Charts-0F1689?logo=helm)
 ![Prometheus](https://img.shields.io/badge/Monitoring-Prometheus-E6522C?logo=prometheus)
 ![Grafana](https://img.shields.io/badge/Dashboards-Grafana-F46800?logo=grafana)
@@ -23,8 +23,10 @@ A **full-featured e-commerce web application** built with Flask and deployed usi
 * **Admin Dashboard**: Complete product, order, and user management
 * **Jenkins Multibranch Pipeline**: Automated CI/CD
 * **Docker & DockerHub**: Containerized deployment
+* **Helm Package Manager**: Kubernetes application deployment and management
 * **Argo CD (GitOps)**: Automated Kubernetes deployments
 * **AWS EKS**: Production Kubernetes cluster
+* **Prometheus & Grafana**: Complete monitoring and observability stack
 
 This repository demonstrates how **real-world DevOps teams** build, automate, and deploy full-stack applications from **code commit to live production**.
 
@@ -72,9 +74,12 @@ This repository demonstrates how **real-world DevOps teams** build, automate, an
 ✔ Jenkins Multibranch Pipeline with feature branch support
 ✔ Automated Docker image builds and DockerHub push
 ✔ Kubernetes deployment with resource limits and health checks
+✔ Helm-based package management for Argo CD and monitoring stack
 ✔ GitOps workflow with Argo CD automated sync
+✔ Prometheus & Grafana monitoring with pre-configured dashboards
 ✔ AWS EKS production cluster deployment
 ✔ LoadBalancer service for external access
+✔ Alertmanager for proactive incident management
 
 ---
 
@@ -134,8 +139,18 @@ LoadBalancer URL → Live E-Commerce Application
 | 🐳 **Docker** | Containerization |
 | 📦 **DockerHub** | Image Registry |
 | ☸️ **Kubernetes (AWS EKS)** | Container Orchestration with Resource Management |
+| � **Helm** |* Kubernetes package manager for Argo CD and monitoring |
 | 🔄 **Argo CD** | GitOps-based Continuous Deployment |
 | 🌐 **LoadBalancer Service** | External Application Access |
+
+### Monitoring & Observability
+| Tool | Purpose |
+|------|---------|
+| 📈 **Prometheus** | Metrics collection and time-series database |
+| 📊 **Grafana** | Visualization dashboards and analytics |
+| 🔔 **Alertmanager** | Alert routing and management |
+| 📡 **Node Exporter** | Hardware and OS metrics collection |
+| 🎯 **Kube State Metrics** | Kubernetes cluster state metrics |
 
 ---
 
@@ -548,11 +563,14 @@ This project demonstrates:
 - Email notification systems
 - User authentication and authorization
 - Admin panel development
-- Docker containerization
+- Docker containerization with multi-stage builds
 - Kubernetes deployment with best practices
-- CI/CD pipeline with Jenkins
+- Helm package management
+- CI/CD pipeline with Jenkins Multibranch
 - GitOps with Argo CD
 - AWS EKS cluster management
+- Prometheus & Grafana monitoring stack
+- Production-grade observability and alerting
 
 Perfect for learning modern DevOps practices and full-stack development! 🚀
 
