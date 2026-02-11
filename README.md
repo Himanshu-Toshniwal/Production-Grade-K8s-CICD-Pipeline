@@ -230,9 +230,13 @@ docker run -p 5000:5000 --env-file .env your-username/ecommerce-app:latest
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 
+# Apply HPA for auto-scaling
+kubectl apply -f k8s/hpa.yaml
+
 # Check status
 kubectl get pods
 kubectl get svc
+kubectl get hpa
 ```
 
 ---
@@ -267,10 +271,12 @@ Production-Grade-Deployment/
 │   │   └── admin.js          # Admin panel JS
 │   ├── k8s/
 │   │   ├── deployment.yaml   # K8s deployment with resource limits
-│   │   └── service.yaml      # LoadBalancer service
+│   │   ├── service.yaml      # LoadBalancer service
+│   │   └── hpa.yaml          # Horizontal Pod Autoscaler
 │   ├── argocd/
 │   │   └── application.yaml  # Argo CD config
 │   ├── Dockerfile            # Container image
+│   ├── .dockerignore         # Docker ignore patterns
 │   ├── Jenkinsfile           # CI/CD pipeline
 │   ├── requirements.txt      # Python dependencies
 │   └── .env                  # Environment variables
