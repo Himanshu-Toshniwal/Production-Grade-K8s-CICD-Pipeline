@@ -34,7 +34,9 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     """Production configuration"""
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    # Use SQLite by default if DATABASE_URL not provided
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///ecommerce.db'
 
 class TestingConfig(Config):
     """Testing configuration"""
